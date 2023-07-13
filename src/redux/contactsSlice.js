@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchContactsAPI, addContactAPI, deleteContactAPI } from '../api'; // Підключіть ваші функції API
+import { fetchContactsAPI, addContactAPI, deleteContactAPI } from '../api';
 
 const initialState = {
   items: [],
@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
   try {
-    const response = await fetchContactsAPI(); // Виклик функції API для отримання контактів
+    const response = await fetchContactsAPI();
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch contacts');
@@ -18,7 +18,7 @@ export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
 
 export const addContact = createAsyncThunk('contacts/addContact', async (contact) => {
   try {
-    const response = await addContactAPI(contact); // Виклик функції API для додавання контакту
+    const response = await addContactAPI(contact);
     return response.data;
   } catch (error) {
     throw new Error('Failed to add contact');
@@ -27,7 +27,7 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 
 export const deleteContact = createAsyncThunk('contacts/deleteContact', async (contactId) => {
   try {
-    await deleteContactAPI(contactId); // Виклик функції API для видалення контакту
+    await deleteContactAPI(contactId);
     return contactId;
   } catch (error) {
     throw new Error('Failed to delete contact');
@@ -78,5 +78,14 @@ const contactsSlice = createSlice({
       });
   },
 });
+
+export const selectFilteredContacts = (state) => {
+  const { items, filter } = state.contacts;
+  const normalizedFilter = filter.toLowerCase().trim();
+
+  return items.filter((contact) =>
+    contact.name.toLowerCase().includes(normalizedFilter)
+  );
+};
 
 export default contactsSlice.reducer;

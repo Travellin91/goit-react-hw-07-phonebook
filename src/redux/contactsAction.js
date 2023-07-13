@@ -1,27 +1,46 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
+import {
+  fetchContactsAPI,
+  addContactAPI,
+  deleteContactAPI,
+} from '../api';
 
-export const addContact = createAction(
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async () => {
+    try {
+      const response = await fetchContactsAPI();
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch contacts');
+    }
+  }
+);
+
+export const addContact = createAsyncThunk(
   'contacts/addContact',
-  ({ name, number }) => ({
-    payload: {
-      id: nanoid(),
-      name,
-      number,
-    },
-  }),
+  async ({ name, number }) => {
+    try {
+      const response = await addContactAPI({ name, number });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to add contact');
+    }
+  }
 );
-    
-export const deleteContact = createAction(
-    'contacts/deleteContact',
-    id => ({
-        payload: id,
-    })
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (contactId) => {
+    try {
+      await deleteContactAPI(contactId);
+      return contactId;
+    } catch (error) {
+      throw new Error('Failed to delete contact');
+    }
+  }
 );
-        
-export const changeFilter = createAction(
-    'contacts/changeFilter',
-    value => ({
-        payload: value,
-    })
-);
+
+export const changeFilter = createAction('contacts/changeFilter');
+
