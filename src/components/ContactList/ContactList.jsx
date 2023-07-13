@@ -11,15 +11,15 @@ function ContactList() {
     dispatch(deleteContact(contactId));
   };
 
-  if (contacts === null || contacts === undefined) {
-    return null;
+  if (!contacts) {
+    return null; 
   }
 
   return (
     <ul className="contact-list">
       {contacts.map((contact) => (
         <li className="contact-item" key={contact.id}>
-          <span className="contact-name">{contact.name || ''}</span> -{' '}
+          <span className="contact-name">{contact.name ? contact.name : ''}</span> -{' '}
           <span className="contact-number">{contact.number}</span>
           <button
             className="contact-delete-button"
