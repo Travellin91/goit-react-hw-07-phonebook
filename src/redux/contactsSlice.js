@@ -1,11 +1,6 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchContactsAPI, addContactAPI, deleteContactAPI } from '../api';
-
-const initialState = {
-  items: [],
-  isLoading: false,
-  error: null,
-};
 
 export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
   try {
@@ -36,7 +31,11 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (c
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -80,12 +79,15 @@ const contactsSlice = createSlice({
 });
 
 export const selectFilteredContacts = (state) => {
-  const { items, filter } = state.contacts;
-  const normalizedFilter = filter.toLowerCase().trim();
-
-  return items.filter((contact) =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  );
+  const { items } = state.contacts;
+  const filter = state.filter;
+  if (filter) {
+    return items.filter((contact) =>
+      contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  } else {
+    return items;
+  }
 };
 
 export default contactsSlice.reducer;
