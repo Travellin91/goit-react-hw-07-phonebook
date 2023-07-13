@@ -12,13 +12,18 @@ function ContactList() {
   };
 
   if (!contacts) {
-    return null; 
+    return null;
   }
 
   return (
     <ul className="contact-list">
       {contacts.map((contact) => {
+        if (!contact) {
+          return null; // Skip rendering if contact is null or undefined
+        }
+
         const { id, name, number } = contact;
+
         return (
           <li className="contact-item" key={id}>
             <span className="contact-name">{name}</span> -{' '}
