@@ -2,15 +2,15 @@ import axios from "axios";
 
 const baseURL = "https://64aff9d5c60b8f941af4fe46.mockapi.io/contacts";
 
-export function fetchContacts() {
+export function fetchContactsAPI() {
   return axios.get(baseURL);
 }
 
-export function addContact(contact) {
+export function addContactAPI(contact) {
   return axios.post(baseURL, contact);
 }
 
-export function deleteContact(id) {
-  const deleteURL = baseURL + "/" + id.toString();
+export function deleteContactAPI(id) {
+  const deleteURL = `${baseURL}/${id}`;
   return axios.delete(deleteURL);
 }

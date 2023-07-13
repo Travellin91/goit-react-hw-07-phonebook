@@ -1,5 +1,4 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 import {
   fetchContactsAPI,
   addContactAPI,
@@ -43,4 +42,3 @@ export const deleteContact = createAsyncThunk(
 );
 
 export const changeFilter = createAction('contacts/changeFilter');
-

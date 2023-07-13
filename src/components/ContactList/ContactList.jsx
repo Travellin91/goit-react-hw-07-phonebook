@@ -17,18 +17,21 @@ function ContactList() {
 
   return (
     <ul className="contact-list">
-      {contacts.map((contact) => (
-        <li className="contact-item" key={contact.id}>
-          <span className="contact-name">{contact.name ? contact.name : ''}</span> -{' '}
-          <span className="contact-number">{contact.number}</span>
-          <button
-            className="contact-delete-button"
-            onClick={() => handleDeleteContact(contact.id)}
-          >
-            <i className="fas fa-trash-alt"></i>
-          </button>
-        </li>
-      ))}
+      {contacts.map((contact) => {
+        const { id, name, number } = contact;
+        return (
+          <li className="contact-item" key={id}>
+            <span className="contact-name">{name}</span> -{' '}
+            <span className="contact-number">{number}</span>
+            <button
+              className="contact-delete-button"
+              onClick={() => handleDeleteContact(id)}
+            >
+              <i className="fas fa-trash-alt"></i>
+            </button>
+          </li>
+        );
+      })}
     </ul>
   );
 }
