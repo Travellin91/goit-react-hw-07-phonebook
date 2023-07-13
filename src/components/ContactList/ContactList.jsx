@@ -11,7 +11,7 @@ function ContactList() {
     dispatch(deleteContact(contactId));
   };
 
-  if (!contacts) {
+  if (contacts === null || contacts === undefined) {
     return null;
   }
 
