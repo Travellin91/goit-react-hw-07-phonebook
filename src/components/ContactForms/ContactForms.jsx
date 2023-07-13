@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../redux/contactsAction';
+import { addContact } from '../../redux/contactsSlice';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import '../ContactForms/contactforms.css';
 
-const ContactForm = ({ items, onSubmit }) => {
+const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -24,14 +24,6 @@ const ContactForm = ({ items, onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const addInputValue = (contact) =>
-      contact.name === name || contact.number === number;
-
-    if (items.some(addInputValue)) {
-      alert('Contact is already in contacts');
-      return;
-    }
 
     onSubmit({ name, number });
     reset();
@@ -82,16 +74,11 @@ const ContactForm = ({ items, onSubmit }) => {
 };
 
 ContactForm.propTypes = {
-  items: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  items: state.contacts.items || [],
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: ({ name, number }) => dispatch(actions.addContact({ name, number })),
+  onSubmit: ({ name, number }) => dispatch(addContact({ name, number })),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export default connect(null, mapDispatchToProps)(ContactForm);
