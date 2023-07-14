@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchContactsAPI, addContactAPI, deleteContactAPI } from '../api';
 
 export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
@@ -82,7 +82,7 @@ export const selectFilteredContacts = (state) => {
   const filter = state.filter;
   if (filter) {
     return items.filter((contact) =>
-      contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
+      contact && contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   } else {
     return items;
