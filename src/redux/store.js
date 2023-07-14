@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
-import contactsReducer from './contactsSlice';
+import { contactsReducer } from './contactsSlice';
 import filterReducer from './filterSlice';
 
 const rootReducer = {
