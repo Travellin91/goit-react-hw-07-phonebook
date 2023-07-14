@@ -19,7 +19,7 @@ function ContactList() {
     <ul className="contact-list">
       {contacts.map((contact) => {
         if (!contact) {
-          return null; // Skip rendering if contact is null or undefined
+          return null;
         }
 
         const { id, name, number } = contact;
