@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../redux/contactsAction';
 import { nanoid } from 'nanoid';
 import '../ContactForms/contactforms.css';
+import { addContact } from '../../redux/contactsSlice';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,8 @@ const ContactForm = () => {
       return;
     }
 
-    dispatch(actions.addContact({ name, number }));
+    dispatch(addContact({ name, number }));
+
     reset();
   };
 

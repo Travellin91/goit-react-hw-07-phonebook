@@ -1,46 +1,35 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import {
-  fetchContactsAPI,
-  addContactAPI,
-  deleteContactAPI,
-} from '../api';
-
-export const fetchContacts = createAsyncThunk(
+export const getContactsThunk = createAsyncThunk(
   'contacts/fetchAll',
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await fetchContactsAPI();
-      return response.data;
+      const data = await fetchContactsAPI();
+      return data;
     } catch (error) {
-      throw new Error('Failed to fetch contacts');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const addContact = createAsyncThunk(
+export const addContactsThunk = createAsyncThunk(
   'contacts/addContact',
-  async ({ name, number }, { dispatch }) => {
+  async (contact, { rejectWithValue }) => {
     try {
-      const response = await addContactAPI({ name, number });
-      dispatch(fetchContacts());
-      return response.data;
+      const data = await addContactAPI(contact);
+      return data;
     } catch (error) {
-      throw new Error('Failed to add contact');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const deleteContact = createAsyncThunk(
+export const deleteContactsThunk = createAsyncThunk(
   'contacts/deleteContact',
-  async (contactId, { dispatch }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      await deleteContactAPI(contactId);
-      dispatch(fetchContacts()); 
-      return contactId;
+      const data = await deleteContactAPI(id);
+      return data;
     } catch (error) {
-      throw new Error('Failed to delete contact');
+      return rejectWithValue(error.message);
     }
   }
 );
-
-export const changeFilter = createAction('contacts/changeFilter');

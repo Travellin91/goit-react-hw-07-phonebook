@@ -1,16 +1,18 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseURL = "https://64aff9d5c60b8f941af4fe46.mockapi.io/contacts";
+const baseURL = 'https://64aff9d5c60b8f941af4fe46.mockapi.io';
 
-export const fetchContactsAPI = () => {
-  return axios.get(baseURL);
+export const fetchContactsAPI = async () => {
+  const response = await axios.get(baseURL);
+  return response.data;
 };
 
-export const addContactAPI = (contact) => {
-  return axios.post(baseURL, contact);
+export const addContactAPI = async (contact) => {
+  const response = await axios.post(baseURL, contact);
+  return response.data;
 };
 
-export const deleteContactAPI = (id) => {
-  const deleteURL = `${baseURL}/${id}`;
-  return axios.delete(deleteURL);
+export const deleteContactAPI = async (id) => {
+  await axios.delete(`${baseURL}/${id}`);
+  return id;
 };
