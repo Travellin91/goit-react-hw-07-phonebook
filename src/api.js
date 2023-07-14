@@ -1,18 +1,30 @@
 import axios from 'axios';
 
-const baseURL = 'https://64aff9d5c60b8f941af4fe46.mockapi.io';
+const baseURL = 'https://64aff9d5c60b8f941af4fe46.mockapi.io/contacts';
 
 export const fetchContactsAPI = async () => {
-  const response = await axios.get(`${baseURL}/contacts`);
-  return response.data;
+  try {
+    const response = await axios.get(`${baseURL}/contacts`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch contacts');
+  }
 };
 
 export const addContactAPI = async (contact) => {
-  const response = await axios.post(`${baseURL}/contacts`, contact);
-  return response.data;
+  try {
+    const response = await axios.post(`${baseURL}/contacts`, contact);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to add contact');
+  }
 };
 
 export const deleteContactAPI = async (contactId) => {
-  await axios.delete(`${baseURL}/contacts/${contactId}`);
-  return contactId;
+  try {
+    await axios.delete(`${baseURL}/contacts/${contactId}`);
+    return contactId;
+  } catch (error) {
+    throw new Error('Failed to delete contact');
+  }
 };

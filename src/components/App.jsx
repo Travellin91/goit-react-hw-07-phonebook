@@ -1,22 +1,33 @@
-import React from 'react';
-import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 import store from '../redux/store';
+import { fetchContacts } from '../redux/contactsSlice';
 import ContactForms from './ContactForms/ContactForms';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import './app.css';
 
-function App() {
-  return (
-    <Provider store={store}>
-      <div className="app-container">
-        <h1 className="app-heading">PhoneBook</h1>
-        <ContactForms />
-        <Filter />
-        <ContactList />
-      </div>
-    </Provider>
-  );
-}
+const App = () => {
+  const dispatch = useDispatch();
 
-export default App;
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  return (
+    <div className="app-container">
+      <h1 className="app-heading">PhoneBook</h1>
+      <ContactForms />
+      <Filter />
+      <ContactList />
+    </div>
+  );
+};
+
+const AppWithRedux = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+export default AppWithRedux;

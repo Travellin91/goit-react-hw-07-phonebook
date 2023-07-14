@@ -28,15 +28,13 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (c
   }
 });
 
-const initialState = {
-  items: [],
-  isLoading: false,
-  error: null,
-};
-
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -94,4 +92,4 @@ export const selectFilteredContacts = (state) => {
   }
 };
 
-export const contactsReducer = contactsSlice.reducer;
+export const { actions: contactsActions, reducer: contactsReducer } = contactsSlice;

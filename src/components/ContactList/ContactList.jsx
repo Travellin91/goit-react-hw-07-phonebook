@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact, selectFilteredContacts } from '../../redux/contactsSlice';
 import '../ContactList/contactlist.css';
 
-function ContactList() {
+const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
 
@@ -17,28 +17,22 @@ function ContactList() {
 
   return (
     <ul className="contact-list">
-      {contacts.map((contact) => {
-        if (!contact) {
-          return null;
-        }
-
-        const { id, name, number } = contact;
-
-        return (
-          <li className="contact-item" key={id}>
-            <span className="contact-name">{name}</span> -{' '}
-            <span className="contact-number">{number}</span>
+      {contacts.map((contact) =>
+        contact ? (
+          <li className="contact-item" key={contact.id}>
+            <span className="contact-name">{contact.name}</span> -{' '}
+            <span className="contact-number">{contact.number}</span>
             <button
               className="contact-delete-button"
-              onClick={() => handleDeleteContact(id)}
+              onClick={() => handleDeleteContact(contact.id)}
             >
               <i className="fas fa-trash-alt"></i>
             </button>
           </li>
-        );
-      })}
+        ) : null
+      )}
     </ul>
   );
-}
+};
 
 export default ContactList;
