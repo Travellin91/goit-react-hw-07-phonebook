@@ -7,7 +7,7 @@ import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import './app.css';
 
-const App = () => {
+function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,19 +15,15 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="app-container">
-      <h1 className="app-heading">PhoneBook</h1>
-      <ContactForms />
-      <Filter />
-      <ContactList />
-    </div>
+    <Provider store={store}>
+      <div className="app-container">
+        <h1 className="app-heading">PhoneBook</h1>
+        <ContactForms />
+        <Filter />
+        <ContactList />
+      </div>
+    </Provider>
   );
-};
+}
 
-const AppWithRedux = () => (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
-
-export default AppWithRedux;
+export default App;
