@@ -1,32 +1,41 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchContactsAPI, addContactAPI, deleteContactAPI } from '../api';
 
-export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
-  try {
-    const response = await fetchContactsAPI();
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch contacts');
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async () => {
+    try {
+      const response = await fetchContactsAPI();
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch contacts');
+    }
   }
-});
+);
 
-export const addContact = createAsyncThunk('contacts/addContact', async (contact) => {
-  try {
-    const response = await addContactAPI(contact);
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to add contact');
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async (contact) => {
+    try {
+      const response = await addContactAPI(contact);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to add contact');
+    }
   }
-});
+);
 
-export const deleteContact = createAsyncThunk('contacts/deleteContact', async (contactId) => {
-  try {
-    await deleteContactAPI(contactId);
-    return contactId;
-  } catch (error) {
-    throw new Error('Failed to delete contact');
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (contactId) => {
+    try {
+      await deleteContactAPI(contactId);
+      return contactId;
+    } catch (error) {
+      throw new Error('Failed to delete contact');
+    }
   }
-});
+);
 
 const initialState = {
   items: [],
@@ -47,8 +56,9 @@ const contactsSlice = createSlice({
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = action.payload;
+        state.items = Array.isArray(action.payload) ? action.payload : [];
       })
+      
       .addCase(fetchContacts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
@@ -94,4 +104,5 @@ export const selectFilteredContacts = (state) => {
   }
 };
 
-export const contactsReducer = contactsSlice.reducer;
+export default contactsSlice.reducer;
+export const { actions: contactsActions } = contactsSlice;
