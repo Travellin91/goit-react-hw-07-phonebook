@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact, selectFilteredContacts } from '../../redux/contactsSlice';
-import '../ContactList/contactlist.css';
+import './contactlist.css';
 
 const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
@@ -17,20 +17,18 @@ const ContactList = () => {
 
   return (
     <ul className="contact-list">
-      {contacts.map((contact) =>
-        contact ? (
-          <li className="contact-item" key={contact.id}>
-            <span className="contact-name">{contact.name}</span> -{' '}
-            <span className="contact-number">{contact.number}</span>
-            <button
-              className="contact-delete-button"
-              onClick={() => handleDeleteContact(contact.id)}
-            >
-              <i className="fas fa-trash-alt"></i>
-            </button>
-          </li>
-        ) : null
-      )}
+      {contacts.map((contact) => (
+        <li className="contact-item" key={contact.id}>
+          <span className="contact-name">{contact.name}</span> -{' '}
+          <span className="contact-number">{contact.phone}</span>
+          <button
+            className="contact-delete-button"
+            onClick={() => handleDeleteContact(contact.id)}
+          >
+            <i className="fas fa-trash-alt"></i>
+          </button>
+        </li>
+      ))}
     </ul>
   );
 };

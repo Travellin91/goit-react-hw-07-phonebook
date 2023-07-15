@@ -1,34 +1,23 @@
+import axios from 'axios';
+
 const baseURL = 'https://64aff9d5c60b8f941af4fe46.mockapi.io';
 
 export const fetchContactsAPI = () => {
-  return fetch(`${baseURL}/contacts`)
+  return axios.get(`${baseURL}/contacts`)
     .then(response => {
-      if (response.ok) {
-        return response.json();
+      if (response.status === 200) {
+        return response.data;
       } else {
         throw new Error('Failed to fetch contacts');
-      }
-    })
-    .then(data => {
-      if (Array.isArray(data)) {
-        return data;
-      } else {
-        throw new Error('Invalid response format');
       }
     });
 };
 
 export const addContactAPI = contact => {
-  return fetch(`${baseURL}/contacts`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(contact)
-  })
+  return axios.post(`${baseURL}/contacts`, contact)
     .then(response => {
-      if (response.ok) {
-        return response.json();
+      if (response.status === 201) {
+        return response.data;
       } else {
         throw new Error('Failed to add contact');
       }
@@ -36,11 +25,9 @@ export const addContactAPI = contact => {
 };
 
 export const deleteContactAPI = contactId => {
-  return fetch(`${baseURL}/contacts/${contactId}`, {
-    method: 'DELETE'
-  })
+  return axios.delete(`${baseURL}/contacts/${contactId}`)
     .then(response => {
-      if (response.ok) {
+      if (response.status === 200) {
         return contactId;
       } else {
         throw new Error('Failed to delete contact');
