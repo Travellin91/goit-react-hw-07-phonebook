@@ -14,7 +14,8 @@ export const fetchContactsAPI = () => {
 };
 
 export const addContactAPI = contact => {
-  return axios.post(`${baseURL}/contacts`, contact)
+  const { name, number } = contact;
+  return axios.post(`${baseURL}/contacts`, { name, number })
     .then(response => {
       if (response.status === 201) {
         return response.data;
